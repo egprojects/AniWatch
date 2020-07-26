@@ -52,8 +52,11 @@ class _AnimeTile extends StatelessWidget {
   final Anime anime;
   final GestureTapCallback onTap;
 
-  const _AnimeTile({Key key, @required this.anime, this.onTap})
-      : super(key: key);
+  const _AnimeTile({
+    Key key,
+    @required this.anime,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
