@@ -1,4 +1,4 @@
-name: aniwatch
+name: anitube
 description: A new Flutter application to watch anime.
 
 publish_to: 'none'
@@ -12,16 +12,17 @@ dependencies:
   flutter:
     sdk: flutter
 
-  styled_widget: ^0.2.1+2
-
-  flutter_platform_widgets: ^0.51.0
+  flutter_platform_widgets: ^0.60.1
   cupertino_icons: ^0.1.3
 
-  provider: ^4.3.1
+  shimmer: ^1.1.1
+
+  provider: ^4.3.2+1
   injector: ^1.0.8
 
-  dio: ^3.0.9
+  dio: ^3.0.10
   html: ^0.14.0+3
+  cached_network_image: ^2.2.0+1
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +31,8 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  fonts:
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald.ttf

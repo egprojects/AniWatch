@@ -1,7 +1,7 @@
 import '../models/anime.dart';
 
 abstract class AnimeService {
-  Future<List<Anime>> getAnimeList(int page);
+  Stream<Anime> getAnimePreviews(int page);
 
   Future<Anime> getAnime(String id);
 }

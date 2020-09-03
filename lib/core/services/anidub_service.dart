@@ -1,4 +1,4 @@
-import 'package:aniwatch/core/models/anime.dart';
+import 'package:anitube/core/models/anime.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 
@@ -12,8 +12,7 @@ class AnidubService implements AnimeService {
   ));
 
   @override
-  Future<List<Anime>> getAnimeList(int page) async {
-    final data = <Anime>[];
+  Stream<Anime> getAnimePreviews(int page) async* {
     final response = await _client.get('/anime/page/$page');
     final content = parse(response.data).querySelector('div#dle-content');
     for (final item in content.querySelectorAll('div.th-item')) {
@@ -22,15 +21,17 @@ class AnidubService implements AnimeService {
       final anidubTitleData =
           item.querySelector('div.th-title').text.split(' [');
       final title = anidubTitleData[0];
-      final lastEpisode = int.parse(anidubTitleData[1].split(' ')[0]);
+      int lastEpisode;
+      try {
+        lastEpisode = int.parse(anidubTitleData[1].split(' ')[0]);
+      } catch (_) {}
       var posterUrl =
           thIn.querySelector('div.th-img').children[0].attributes['data-src'];
       if (!posterUrl.contains('https://')) posterUrl = _baseUrl + posterUrl;
       final rating = double.parse(thIn.querySelector('div.th-rating').text);
-      data.add(Anime(id, title, posterUrl, lastEpisode, rating));
-    }
 
-    return data;
+      yield Anime(id, title, posterUrl, lastEpisode, rating);
+    }
   }
 
   @override
