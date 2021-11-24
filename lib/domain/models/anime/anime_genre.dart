@@ -1,0 +1,58 @@
+// enum AnimeGenre {
+//   adventure,
+//   drama,
+//   games,
+//   psychological,
+//   music,
+//   gourmet,
+//   action,
+//   comedy,
+//   demons,
+//   police,
+//   space,
+//   ecchi,
+//   fantasy,
+//   hentai,
+//   historical,
+//   horror,
+//   magic,
+//   mecha,
+//   parody,
+//   samurai,
+//   romance,
+//   school,
+//   erotica,
+//   shounen,
+//   sports,
+//   vampire,
+//   yaoi,
+//   yuri,
+//   harem,
+//   sliceOfLife,
+//   shoujoAi,
+//   josei,
+//   supernatural,
+//   thriller,
+//   sciFi,
+//   shoujo,
+//   superPower,
+//   military,
+//   mystery,
+//   kids,
+//   cars,
+//   martialArts,
+//   dementia,
+//   workLife,
+//   seinen,
+//   shounenAi,
+// }
+
+class AnimeGenre {
+  const AnimeGenre({
+    required this.id,
+    required this.name,
+  });
+
+  final int id;
+  final String name;
+}

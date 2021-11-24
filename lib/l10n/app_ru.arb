@@ -1,0 +1,11 @@
+{
+    "appTitle": "AniWatch",
+    "homeBookmarksLabel": "Закладки",
+    "homeDownloadsLabel": "Загрузки",
+    "homeMainLabel": "Главная",
+    "homeMainLatestReleasesLabel": "Последние релизы",
+    "homeMainPopularReleasesLabel": "Популярные релизы",
+    "homeMainContinueWatching": "Продолжить просмотр",
+    "homeProfileLabel": "Профиль",
+    "homeSearchLabel": "Поиск"
+}
