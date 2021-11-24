@@ -57,10 +57,12 @@ class ShikimoriApiService extends RestfulApiServiceBase implements ApiService {
       kind: _deserializeAnimeKind(json['kind']),
       status: _deserializeAnimeStatus(json['status']),
       episodesCount: json['episodes'],
+      episodeDuration: _deserializeEpisodeDuration(json['duration']),
       rating: _deserializeAnimeRating(json['rating']),
       genres: _deserializeGenres(json['genres']),
-      // TODO: Implement studios deserialization
-      studios: const [],
+      studios: _deserializeStudios(json['studios']),
+      framesUrls: json['screenshots'],
+      videos: _deserializeVideos(json['videos']),
       airedOn: _deserializeDate(json['aired_on']),
       releasedOn: _deserializeDate(json['released_on']),
       description: json['description'],
@@ -111,6 +113,11 @@ class ShikimoriApiService extends RestfulApiServiceBase implements ApiService {
     throw UnsupportedError('Unsupported anime status: `$source`');
   }
 
+  Duration _deserializeEpisodeDuration(String source) {
+    // TODO: Implement
+    return Duration.zero;
+  }
+
   Rating? _deserializeAnimeRating(String source) {
     switch (source) {
       case 'g':
@@ -139,6 +146,16 @@ class ShikimoriApiService extends RestfulApiServiceBase implements ApiService {
       id: json['id'],
       name: json['name'],
     );
+  }
+
+  List<AnimeStudio> _deserializeStudios(Iterable<Json> jsons) {
+    // TODO: Implement
+    return const [];
+  }
+
+  List<AnimeVideo> _deserializeVideos(Iterable<Json> jsons) {
+    // TODO: Implement
+    return const [];
   }
 
   double _deserializeDouble(String source) {
