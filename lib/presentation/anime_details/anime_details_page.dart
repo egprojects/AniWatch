@@ -1,6 +1,6 @@
 import '/domain/extensions/context_dependents.dart';
 import '/presentation/widgets/widgets.dart';
-import 'anime_details_model.dart';
+import 'selectors/anime_details_selectors.dart';
 
 class AnimeDetailsPage extends StatelessWidget {
   const AnimeDetailsPage({
@@ -39,7 +39,7 @@ class AnimeDetailsPage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: borderRadiusB24,
         child: Stack(
-          children: [
+          children: <Widget>[
             _buildFrames(context),
             _buildTopBarInfo(context),
             if (context.navigator.canPop()) _buildBackButton(context),
@@ -50,8 +50,7 @@ class AnimeDetailsPage extends StatelessWidget {
   }
 
   Widget _buildFrames(BuildContext context) {
-    return Selector<AnimeDetailsModel, bool>(
-      selector: (context, model) => model.isLoading,
+    return AnimeDetailsIsLoadingSelector(
       builder: (context, isLoading, ___) {
         return isLoading
             ? const AwPlaceholder(
@@ -85,28 +84,34 @@ class AnimeDetailsPage extends StatelessWidget {
   }
 
   Widget _buildTopBarInfo(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints.expand(),
-      padding: edgeInsetsH32V24,
-      alignment: Alignment.bottomCenter,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.0, 1.0],
-          colors: [
-            Colors.transparent,
-            Colors.black,
-          ],
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: DecoratedBox(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0, 1],
+              colors: [
+                Colors.transparent,
+                Colors.black,
+              ],
+            ),
+          ),
+          child: Padding(
+            padding: edgeInsetsH32V24,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTopBarTextInfo(context),
+                spacerW16,
+                _buildWatchButton(context),
+              ],
+            ),
+          ),
         ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTopBarTextInfo(context),
-          spacerW16,
-          _buildWatchButton(context),
-        ],
       ),
     );
   }
@@ -132,8 +137,7 @@ class AnimeDetailsPage extends StatelessWidget {
       style: Theme.of(context).textTheme.headline5!.copyWith(
             color: Colors.white,
           ),
-      child: Selector<AnimeDetailsModel, bool>(
-        selector: (context, model) => model.isLoading,
+      child: AnimeDetailsIsLoadingSelector(
         builder: (context, isLoading, ___) {
           return isLoading
               ? const AwPlaceholder.text(
@@ -176,12 +180,11 @@ class AnimeDetailsPage extends StatelessWidget {
 
   Widget _buildEpisodesCount(BuildContext context) {
     return Expanded(
-      child: Selector<AnimeDetailsModel, bool>(
-        selector: (context, model) => model.isLoading,
+      child: AnimeDetailsIsLoadingSelector(
         builder: (context, isLoading, ___) {
           return isLoading
               ? const AwPlaceholder.text(
-                  width: 96.0,
+                  width: 96,
                 )
               : const Text('24 episodes');
         },
@@ -191,12 +194,11 @@ class AnimeDetailsPage extends StatelessWidget {
 
   Widget _buildEpisodesDuration(BuildContext context) {
     return Expanded(
-      child: Selector<AnimeDetailsModel, bool>(
-        selector: (context, model) => model.isLoading,
+      child: AnimeDetailsIsLoadingSelector(
         builder: (context, isLoading, ___) {
           return isLoading
               ? const AwPlaceholder.text(
-                  width: 64.0,
+                  width: 64,
                 )
               : const Text('24min');
         },
@@ -206,8 +208,8 @@ class AnimeDetailsPage extends StatelessWidget {
 
   Widget _buildGenres(BuildContext context) {
     return Wrap(
-      spacing: 8.0,
-      runSpacing: 8.0,
+      spacing: 8,
+      runSpacing: 8,
       children: const [
         AnimeGenreChip(genre: 'Animation'),
         AnimeGenreChip(genre: 'Action'),
@@ -429,6 +431,7 @@ class AnimeDetailsPage extends StatelessWidget {
 
   Widget _buildStorylineText(BuildContext context) {
     return const Text(
+      // ignore: lines_longer_than_80_chars
       'From DreamWorks Animation comes a surprising tale about growing up, finding the courage to face the unknown... and how nothing can ever train you to let go. What began as an unlikely friendship between an adolescent Viking and a fearsome Night Fury dragon has become an epic adventure spanning their lives.',
     );
   }

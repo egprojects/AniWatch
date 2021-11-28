@@ -4,8 +4,8 @@ import '../widgets.dart';
 class AnimeSmallTile extends StatelessWidget {
   const AnimeSmallTile({
     Key? key,
-    required this.anime,
-    required this.onTap,
+    this.anime,
+    this.onTap,
   }) : super(key: key);
 
   final AnimePreview? anime;
@@ -17,18 +17,12 @@ class AnimeSmallTile extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: borderRadius24,
       ),
-      child: ChildedBuilder(
-        child: _Content(
-          anime: anime,
-        ),
-        builder: (context, content) {
-          return _OnTapListener(
-            anime: anime,
-            onTap: onTap,
-            content: content,
-          );
-        },
-      ),
+      child: anime == null
+          ? const _OnTapListener()
+          : _OnTapListener(
+              anime: anime,
+              onTap: onTap,
+            ),
     );
   }
 }
@@ -36,21 +30,23 @@ class AnimeSmallTile extends StatelessWidget {
 class _OnTapListener extends StatelessWidget {
   const _OnTapListener({
     Key? key,
-    required this.anime,
-    required this.onTap,
-    required this.content,
+    this.anime,
+    this.onTap,
   }) : super(key: key);
 
   final AnimePreview? anime;
   final VoidCallback? onTap;
-  final Widget content;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: anime == null ? null : () => onTap?.call(),
       borderRadius: borderRadius24,
-      child: content,
+      child: anime == null
+          ? const _Content()
+          : _Content(
+              anime: anime,
+            ),
     );
   }
 }
@@ -58,7 +54,7 @@ class _OnTapListener extends StatelessWidget {
 class _Content extends StatelessWidget {
   const _Content({
     Key? key,
-    required this.anime,
+    this.anime,
   }) : super(key: key);
 
   final AnimePreview? anime;
@@ -67,65 +63,59 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _Poster(
-          posterUrl: anime?.posterUrl,
-        ),
-        _Title(
-          title: anime?.title,
-        ),
-      ],
+      children: anime == null
+          ? const [
+              _PosterPlaceholder(),
+              _TitleBox(),
+            ]
+          : [
+              _Poster(url: anime!.posterUrl),
+              _TitleBox(title: anime!.title),
+            ],
     );
   }
 }
 
 class _Poster extends StatelessWidget {
   const _Poster({
+    required this.url,
     Key? key,
-    required this.posterUrl,
   }) : super(key: key);
 
-  final String? posterUrl;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: posterUrl == null
-          ? const AwPlaceholder()
-          : _PosterContent(
-              posterUrl: posterUrl!,
-            ),
-    );
-  }
-}
-
-class _PosterContent extends StatelessWidget {
-  const _PosterContent({
-    Key? key,
-    required this.posterUrl,
-  }) : super(key: key);
-
-  final String posterUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    return Ink(
-      decoration: BoxDecoration(
-        color: Theme.of(context).highlightColor,
-        borderRadius: borderRadius24,
-        image: DecorationImage(
-          image: NetworkImage(posterUrl),
-          fit: BoxFit.cover,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: Theme.of(context).highlightColor,
+          borderRadius: borderRadius24,
+          image: DecorationImage(
+            image: NetworkImage(url),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
   }
 }
 
-class _Title extends StatelessWidget {
-  const _Title({
+class _PosterPlaceholder extends StatelessWidget {
+  const _PosterPlaceholder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Expanded(
+      child: AwPlaceholder(),
+    );
+  }
+}
+
+class _TitleBox extends StatelessWidget {
+  const _TitleBox({
     Key? key,
-    required this.title,
+    this.title,
   }) : super(key: key);
 
   final String? title;
@@ -134,12 +124,16 @@ class _Title extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: edgeInsetsH16V2,
-      child: DefaultTextStyle(
-        maxLines: 1,
-        overflow: TextOverflow.fade,
-        softWrap: false,
-        style: Theme.of(context).textTheme.subtitle2!,
-        child: title == null ? const AwPlaceholder.text() : Text(title!),
+      child: Builder(
+        builder: (context) {
+          return DefaultTextStyle(
+            maxLines: 1,
+            overflow: TextOverflow.fade,
+            softWrap: false,
+            style: Theme.of(context).textTheme.subtitle2!,
+            child: title == null ? const AwPlaceholder.text() : Text(title!),
+          );
+        },
       ),
     );
   }

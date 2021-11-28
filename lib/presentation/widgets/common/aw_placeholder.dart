@@ -1,14 +1,12 @@
 import '../widgets.dart';
 
-enum _AwPlaceholderType { box, text }
-
 class AwPlaceholder extends StatelessWidget {
   const AwPlaceholder({
     Key? key,
     this.width,
     this.height,
     this.borderRadius = borderRadius24,
-  })  : type = _AwPlaceholderType.box,
+  })  : isText = false,
         textStyle = null,
         textMaxLines = null,
         super(key: key);
@@ -19,11 +17,11 @@ class AwPlaceholder extends StatelessWidget {
     this.borderRadius = borderRadius24,
     this.textStyle,
     this.textMaxLines,
-  })  : type = _AwPlaceholderType.text,
+  })  : isText = true,
         height = null,
         super(key: key);
 
-  final _AwPlaceholderType type;
+  final bool isText;
   final double? width;
   final double? height;
   final BorderRadiusGeometry? borderRadius;
@@ -32,9 +30,9 @@ class AwPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return type == _AwPlaceholderType.box
-        ? _buildLinePlaceholder(context)
-        : _buildTextPlaceholder(context);
+    return isText
+        ? _buildTextPlaceholder(context)
+        : _buildPlaceholderLine(context);
   }
 
   Widget _buildTextPlaceholder(BuildContext context) {
@@ -45,7 +43,7 @@ class AwPlaceholder extends StatelessWidget {
     }
 
     return linesCount < 2
-        ? _buildLinePlaceholder(context)
+        ? _buildPlaceholderLine(context)
         : _buildMultilineTextPlaceholder(
             context,
             linesCount: linesCount,
@@ -56,7 +54,8 @@ class AwPlaceholder extends StatelessWidget {
     BuildContext context, {
     required int linesCount,
   }) {
-    final linePlaceholder = _buildLinePlaceholder(context);
+    final linePlaceholder = _buildPlaceholderLine(context);
+
     return Column(
       children: List.generate(
         linesCount,
@@ -65,11 +64,37 @@ class AwPlaceholder extends StatelessWidget {
     );
   }
 
-  Widget _buildLinePlaceholder(BuildContext context) {
+  Widget _buildPlaceholderLine(BuildContext context) {
+    return _PlaceholderLine(
+      isText: isText,
+      width: width,
+      height: height,
+      borderRadius: borderRadius,
+      textStyle: textStyle,
+    );
+  }
+}
+
+class _PlaceholderLine extends StatelessWidget {
+  const _PlaceholderLine({
+    required this.isText,
+    this.width,
+    this.height,
+    this.borderRadius,
+    this.textStyle,
+    Key? key,
+  }) : super(key: key);
+
+  final bool isText;
+  final double? width;
+  final double? height;
+  final BorderRadiusGeometry? borderRadius;
+  final TextStyle? textStyle;
+
+  @override
+  Widget build(BuildContext context) {
     late final double? height;
-    if (type == _AwPlaceholderType.box) {
-      height = this.height;
-    } else {
+    if (isText) {
       final TextStyle textStyle =
           this.textStyle ?? DefaultTextStyle.of(context).style;
       final TextPainter textPainter = TextPainter(
@@ -79,12 +104,45 @@ class AwPlaceholder extends StatelessWidget {
       );
 
       height = textPainter.preferredLineHeight;
+    } else {
+      height = this.height;
     }
 
-    return Container(
-      width: width,
-      height: type == _AwPlaceholderType.box ? height : height! - 4.0,
-      margin: type == _AwPlaceholderType.box ? null : edgeInsetsV2,
+    Widget body = _PlaceholderBody(
+      borderRadius: borderRadius,
+    );
+
+    body = isText
+        ? Padding(
+            padding: edgeInsetsV2,
+            child: body,
+          )
+        : body;
+
+    return height != null || width != null
+        ? SizedBox(
+            width: width ?? double.maxFinite,
+            height: height ?? double.maxFinite,
+            child: body,
+          )
+        : ConstrainedBox(
+            constraints: const BoxConstraints.expand(),
+            child: body,
+          );
+  }
+}
+
+class _PlaceholderBody extends StatelessWidget {
+  const _PlaceholderBody({
+    Key? key,
+    this.borderRadius,
+  }) : super(key: key);
+
+  final BorderRadiusGeometry? borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: Theme.of(context).highlightColor,
         borderRadius: borderRadius,

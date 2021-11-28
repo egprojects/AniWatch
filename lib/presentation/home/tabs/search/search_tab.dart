@@ -5,8 +5,10 @@ class SearchTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.pinkAccent,
+      ),
     );
   }
 }

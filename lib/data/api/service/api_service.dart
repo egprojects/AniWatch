@@ -16,4 +16,6 @@ abstract class ApiService {
   });
 
   Future<AnimeDetails> getAnimeDetails(int id);
+
+  void close();
 }

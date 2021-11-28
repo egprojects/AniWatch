@@ -1,59 +1,106 @@
+import 'dart:collection';
+
+import 'package:provider/provider.dart';
+
 import '/domain/extensions/context_dependents.dart';
 import '/presentation/widgets/widgets.dart';
 import 'home_model.dart';
+import 'selectors/home_selectors.dart';
+import 'tabs/bookmarks/bookmarks_tab.dart';
+import 'tabs/downloads/downloads_tab.dart';
+import 'tabs/main/main_tab.dart';
+import 'tabs/profile/profile_tab.dart';
+import 'tabs/search/search_tab.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(context),
-      bottomNavigationBar: _buildBottomNavigationBar(context),
+    return const Scaffold(
+      body: _Body(),
+      bottomNavigationBar: _BottomNavigation(),
     );
   }
+}
 
-  Widget _buildBody(BuildContext context) {
-    return Selector<HomeModel, int>(
-      selector: (_, model) => model.currentTabIndex,
+class _Body extends StatefulWidget {
+  const _Body({Key? key}) : super(key: key);
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  late final List<Widget> _tabs = UnmodifiableListView([
+    _buildMainTab(context),
+    const SearchTab(),
+    const BookmarksTab(),
+    const DownloadsTab(),
+    const ProfileTab(),
+  ]);
+
+  @override
+  Widget build(BuildContext context) {
+    return CurrentTabIndexSelector(
       builder: (_, currentTabIndex, ___) {
         return IndexedStack(
           index: currentTabIndex,
-          children: context
-              .read<HomeModel>()
-              .tabs
-              .map((tab) => AnimatedSwitcher(
-                    duration: kTabScrollDuration,
-                    child: tab,
-                  ))
-              .toList(growable: false),
+          children: _tabs,
         );
-        // return AnimatedSwitcher(
-        //   duration: kTabScrollDuration,
-        //   child: currentTab,
-        // );
       },
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
-    return Selector<HomeModel, int>(
-      selector: (_, model) => model.currentTabIndex,
+  Widget _buildMainTab(BuildContext context) {
+    return _buildTabAnimatedSwitcher(
+      context,
+      tab: ChangeNotifierProvider(
+        create: context.read<HomeModel>().createMainTabModel,
+        child: const MainTab(),
+      ),
+    );
+  }
+
+  Widget _buildTabAnimatedSwitcher(
+    BuildContext context, {
+    required Widget tab,
+  }) {
+    return AnimatedSwitcher(
+      duration: kTabScrollDuration,
+      child: tab,
+    );
+  }
+}
+
+class _BottomNavigation extends StatelessWidget {
+  const _BottomNavigation({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CurrentTabIndexSelector(
       builder: (context, currentTabIndex, ___) {
-        return Builder(builder: (context) {
-          // TODO: Replace with Material You `BottomNavigation`
-          return BottomNavigationBar(
-            onTap: context.read<HomeModel>().onTabTapped,
-            currentIndex: currentTabIndex,
-            type: BottomNavigationBarType.fixed,
-            items: _buildBottomNavigationBarItems(context),
-          );
-        });
+        return Builder(
+          builder: (context) {
+            // TODO: replace with Material You `BottomNavigation`
+            return BottomNavigationBar(
+              onTap: context.read<HomeModel>().onTabTapped,
+              currentIndex: currentTabIndex,
+              type: BottomNavigationBarType.fixed,
+              items: _buildItems(context),
+            );
+          },
+        );
       },
     );
   }
 
-  List<BottomNavigationBarItem> _buildBottomNavigationBarItems(
+  List<BottomNavigationBarItem> _buildItems(
     BuildContext context,
   ) {
     return [

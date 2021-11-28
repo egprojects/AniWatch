@@ -5,8 +5,10 @@ class BookmarksTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blueGrey,
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.amber,
+      ),
     );
   }
 }
