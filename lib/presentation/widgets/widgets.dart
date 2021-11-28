@@ -1,4 +1,5 @@
 export 'package:flutter/material.dart';
+export 'package:provider/provider.dart';
 
 export 'anime/anime_genre_chip.dart';
 export 'anime/anime_small_tile.dart';

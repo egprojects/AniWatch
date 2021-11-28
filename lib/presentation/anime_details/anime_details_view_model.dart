@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart' show ChangeNotifier;
 import '/domain/models/anime/anime_details.dart';
 import '/domain/repositories/anime_repository.dart';
 
-class AnimeDetailsModel extends ChangeNotifier {
-  AnimeDetailsModel({
+class AnimeDetailsViewModel extends ChangeNotifier {
+  AnimeDetailsViewModel({
     required int id,
     required AnimeRepository animeRepository,
   }) : _animeRepository = animeRepository {

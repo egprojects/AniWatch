@@ -8,10 +8,10 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:provider/provider.dart';
 
-import '/presentation/anime_details/anime_details_model.dart';
-import '/presentation/anime_details/anime_details_page.dart';
-import '/presentation/home/home_model.dart';
-import '/presentation/home/home_page.dart';
+import '/presentation/anime_details/anime_details_view.dart';
+import '/presentation/anime_details/anime_details_view_model.dart';
+import '/presentation/navigation/navigation_view.dart';
+import '/presentation/navigation/navigation_view_model.dart';
 
 const String _homeRouteName = r'/';
 const String _animeRouteName = r'/anime';
@@ -46,27 +46,27 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
 }
 
 Widget _homeRouteBuilder(BuildContext context, RouteSettings settings) {
-  return ChangeNotifierProvider<HomeModel>(
-    create: (context) => HomeModel(
-      animeRepository: context.read(),
+  return ChangeNotifierProvider<NavigationViewModel>(
+    create: (context) => NavigationViewModel(
+      initialTabIndex: NavigationViewModel.homeTabIndex,
     ),
-    child: const HomePage(),
+    child: const NavigationView(),
   );
 }
 
 Widget _animeDetailsRouteBuilder(BuildContext context, RouteSettings settings) {
-  return ChangeNotifierProvider<AnimeDetailsModel>(
+  return ChangeNotifierProvider<AnimeDetailsViewModel>(
     create: (BuildContext context) {
       final String routeName = settings.name!;
       final String idSourceString =
           routeName.substring(_animeRouteName.length + 1);
       final int id = int.parse(idSourceString);
 
-      return AnimeDetailsModel(
+      return AnimeDetailsViewModel(
         id: id,
         animeRepository: context.read(),
       );
     },
-    child: const AnimeDetailsPage(),
+    child: const AnimeDetailsView(),
   );
 }
