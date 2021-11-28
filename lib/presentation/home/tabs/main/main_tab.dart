@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+
 import '/domain/extensions/context_dependents.dart';
 import '/domain/models/anime/anime_preview.dart';
 import '/internal/navigation.dart' as navigation;

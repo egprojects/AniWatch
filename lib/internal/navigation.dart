@@ -13,13 +13,8 @@ import '/presentation/anime_details/anime_details_page.dart';
 import '/presentation/home/home_model.dart';
 import '/presentation/home/home_page.dart';
 
-typedef _RouteBuilder = Widget Function(
-  BuildContext context,
-  RouteSettings settings,
-);
-
-const _homeRouteName = r'/';
-const _animeRouteName = r'/anime';
+const String _homeRouteName = r'/';
+const String _animeRouteName = r'/anime';
 
 Future<dynamic> openHome(BuildContext context) {
   return Navigator.pushNamed(context, _homeRouteName);
@@ -34,7 +29,7 @@ Future<dynamic> openAnimeDetails(
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   final String? routeName = settings.name;
-  late final _RouteBuilder builder;
+  late final Widget Function(BuildContext, RouteSettings) builder;
 
   if (routeName == null) {
     return null;
@@ -44,9 +39,9 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     builder = _animeDetailsRouteBuilder;
   }
 
-  return MaterialPageRoute(
+  return MaterialPageRoute<Widget>(
     settings: settings,
-    builder: (context) => builder(context, settings),
+    builder: (BuildContext context) => builder(context, settings),
   );
 }
 
@@ -61,7 +56,7 @@ Widget _homeRouteBuilder(BuildContext context, RouteSettings settings) {
 
 Widget _animeDetailsRouteBuilder(BuildContext context, RouteSettings settings) {
   return ChangeNotifierProvider<AnimeDetailsModel>(
-    create: (context) {
+    create: (BuildContext context) {
       final String routeName = settings.name!;
       final String idSourceString =
           routeName.substring(_animeRouteName.length + 1);

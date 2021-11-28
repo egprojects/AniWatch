@@ -5,8 +5,10 @@ class DownloadsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.deepPurple,
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.blueGrey,
+      ),
     );
   }
 }

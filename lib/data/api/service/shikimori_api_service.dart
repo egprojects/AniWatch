@@ -22,7 +22,7 @@ class ShikimoriApiService extends RestfulApiServiceBase implements ApiService {
   }) {
     return requestDataList(
       path: _Endpoints.animes,
-      queryParameters: {
+      queryParameters: <String, String>{
         if (page != null) 'page': page.toString(),
         if (limit != null) 'limit': limit.toString(),
         if (order != null) 'order': order.toString(),
@@ -59,7 +59,7 @@ class ShikimoriApiService extends RestfulApiServiceBase implements ApiService {
       episodesCount: json['episodes'],
       rating: _deserializeAnimeRating(json['rating']),
       genres: _deserializeGenres(json['genres']),
-      // TODO: Implement studios deserialization
+      // TODO(Marat): Implement studios deserialization
       studios: const [],
       airedOn: _deserializeDate(json['aired_on']),
       releasedOn: _deserializeDate(json['released_on']),

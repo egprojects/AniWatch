@@ -89,12 +89,12 @@ abstract class RestfulApiServiceBase {
 
   Future<T> requestData<T>({
     required String path,
+    required T Function(Json) deserializer,
     HttpRequestMethod method = HttpRequestMethod.get,
     HttpHeaders? headers,
     HttpQueryParameters? queryParameters,
     Object? body,
     Encoding? encoding,
-    required T Function(Json) deserializer,
   }) {
     return request(
       path,
@@ -112,12 +112,12 @@ abstract class RestfulApiServiceBase {
 
   Future<List<T>> requestDataList<T>({
     required String path,
+    required T Function(Json) deserializer,
     HttpRequestMethod method = HttpRequestMethod.get,
     HttpHeaders? headers,
     HttpQueryParameters? queryParameters,
     Object? body,
     Encoding? encoding,
-    required T Function(Json) deserializer,
   }) {
     return request(
       path,
@@ -128,8 +128,12 @@ abstract class RestfulApiServiceBase {
       encoding: encoding,
     ).then((response) {
       return (json.decode(response.body) as Iterable<dynamic>)
-          .map((json) => deserializer(json as Json))
+          .map((jsonDynamic) => deserializer(jsonDynamic as Json))
           .toList(growable: false);
     });
+  }
+
+  void close() {
+    _client.close();
   }
 }

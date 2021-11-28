@@ -4,7 +4,7 @@ import '/domain/models/anime/anime_preview.dart';
 import '/domain/repositories/anime_repository.dart';
 import '/presentation/widgets/widgets.dart';
 
-class MainModel with ChangeNotifier {
+class MainModel extends ChangeNotifier {
   MainModel({
     required AnimeRepository animeRepository,
   }) : _animeRepository = animeRepository {
@@ -22,7 +22,7 @@ class MainModel with ChangeNotifier {
   bool get isGettingLatestReleases => _isGettingLatestReleases;
   bool get hasErrorGettingLatestReleases => _hasErrorGettingLatestReleases;
 
-  void _getLatestReleases() async {
+  Future<void> _getLatestReleases() async {
     try {
       _isGettingLatestReleases = true;
       _latestReleases = await _animeRepository.getLatestReleases(

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart' show ChangeNotifier;
 import '/domain/models/anime/anime_details.dart';
 import '/domain/repositories/anime_repository.dart';
 
-class AnimeDetailsModel with ChangeNotifier {
+class AnimeDetailsModel extends ChangeNotifier {
   AnimeDetailsModel({
     required int id,
     required AnimeRepository animeRepository,
@@ -22,7 +22,7 @@ class AnimeDetailsModel with ChangeNotifier {
   Future<void> _getAnimeDetails(int id) async {
     _isLoading = true;
     try {
-      await Future.delayed(const Duration(seconds: 3));
+      await Future<Duration>.delayed(const Duration(seconds: 3));
       animeDetails = await _animeRepository.getAnimeDetails(id);
     } on Error {
       _hasErrorGettingAnimeDetails = true;
