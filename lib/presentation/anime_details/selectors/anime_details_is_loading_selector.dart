@@ -10,7 +10,7 @@ class AnimeDetailsIsLoadingSelector
     Key? key,
   }) : super(
           key: key,
-          selector: (context, model) => model.isLoading,
+          selector: (context, viewModel) => viewModel.isLoading,
           builder: builder,
         );
 }

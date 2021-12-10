@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '/presentation/widgets/widgets.dart';
 import 'dependencies.dart';
 import 'navigation.dart' as navigation;
 import 'theme.dart' as theme;
@@ -9,9 +10,11 @@ class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   void run() {
-    runApp(DependenciesProvider(
-      child: this,
-    ));
+    runApp(
+      DependenciesProvider(
+        child: this,
+      ),
+    );
   }
 
   @override
