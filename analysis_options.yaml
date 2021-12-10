@@ -25,7 +25,6 @@ linter:
     avoid_void_async: true
     directives_ordering: true
     eol_at_end_of_file: true
-    flutter_style_todos: true
     lines_longer_than_80_chars: true
     no_leading_underscores_for_library_prefixes: true
     no_leading_underscores_for_local_identifiers: true

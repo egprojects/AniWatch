@@ -1,11 +1,12 @@
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
+
 import '/domain/models/anime/anime_preview.dart';
 import '/domain/repositories/anime_repository.dart';
-import '/presentation/widgets/widgets.dart';
 
-class MainModel extends ChangeNotifier {
-  MainModel({
+class HomeViewModel extends ChangeNotifier {
+  HomeViewModel({
     required AnimeRepository animeRepository,
   }) : _animeRepository = animeRepository {
     _getLatestReleases();

@@ -2,8 +2,8 @@ import '/domain/extensions/context_dependents.dart';
 import '/presentation/widgets/widgets.dart';
 import 'selectors/anime_details_selectors.dart';
 
-class AnimeDetailsPage extends StatelessWidget {
-  const AnimeDetailsPage({
+class AnimeDetailsView extends StatelessWidget {
+  const AnimeDetailsView({
     Key? key,
   }) : super(key: key);
 
@@ -39,7 +39,7 @@ class AnimeDetailsPage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: borderRadiusB24,
         child: Stack(
-          children: <Widget>[
+          children: [
             _buildFrames(context),
             _buildTopBarInfo(context),
             if (context.navigator.canPop()) _buildBackButton(context),

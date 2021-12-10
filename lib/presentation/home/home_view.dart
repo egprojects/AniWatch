@@ -1,15 +1,11 @@
-import 'package:provider/provider.dart';
-
 import '/domain/extensions/context_dependents.dart';
 import '/domain/models/anime/anime_preview.dart';
 import '/internal/navigation.dart' as navigation;
 import '/presentation/widgets/widgets.dart';
-import 'main_model.dart';
+import 'home_view_model.dart';
 
-const _cardAspectRatio = 4.0 / 5.75;
-
-class MainTab extends StatelessWidget {
-  const MainTab({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +38,19 @@ class MainTab extends StatelessWidget {
       label: context.localizations.homeMainLatestReleasesLabel,
       child: _buildSectionItemsList(
         context,
-        itemCount: context.read<MainModel>().latestReleasesCount,
+        itemCount: context.read<HomeViewModel>().latestReleasesCount,
         itemBuilder: _buildLatestReleasesItem,
       ),
     );
   }
 
   Widget _buildLatestReleasesItem(BuildContext context, int index) {
-    return Selector<MainModel, bool>(
+    return Selector<HomeViewModel, bool>(
       selector: (context, model) => model.isGettingLatestReleases,
       builder: (context, isGettingLatestReleases, ___) {
         final AnimePreview? anime = isGettingLatestReleases
             ? null
-            : context.read<MainModel>().latestReleases[index];
+            : context.read<HomeViewModel>().latestReleases[index];
 
         return isGettingLatestReleases
             ? const AnimeSmallTile(
@@ -62,7 +58,7 @@ class MainTab extends StatelessWidget {
                 onTap: null,
               )
             : AnimeSmallTile(
-                anime: context.read<MainModel>().latestReleases[index],
+                anime: context.read<HomeViewModel>().latestReleases[index],
                 onTap: () {
                   navigation.openAnimeDetails(context, id: anime!.id);
                 },
@@ -110,8 +106,9 @@ class MainTab extends StatelessWidget {
   }) {
     final double cardMarginHorizontal =
         context.cardTheme.margin?.horizontal ?? 8.0;
+    const double itemAspectRatio = 16 / 23;
     final double itemWidth = 128.0 + cardMarginHorizontal;
-    final double itemHeight = itemWidth / _cardAspectRatio;
+    final double itemHeight = itemWidth / itemAspectRatio;
 
     return SizedBox(
       height: itemHeight,
