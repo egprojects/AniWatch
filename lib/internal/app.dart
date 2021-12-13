@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '/presentation/navigation/navigation_view.dart';
+import '/presentation/navigation/navigation_view_model.dart';
 import '/presentation/widgets/widgets.dart';
 import 'dependencies.dart';
-import 'navigation.dart' as navigation;
 import 'theme.dart' as theme;
 
 class App extends StatelessWidget {
@@ -26,7 +27,12 @@ class App extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: theme.light,
       darkTheme: theme.dark,
-      onGenerateRoute: navigation.onGenerateRoute,
+      builder: (context, __) {
+        return ChangeNotifierProvider(
+          create: (context) => NavigationViewModel(),
+          child: const NavigationView(),
+        );
+      },
     );
   }
 
