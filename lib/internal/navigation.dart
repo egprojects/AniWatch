@@ -34,7 +34,7 @@ Future<dynamic> openAnimeDetails(
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   final String? routeName = settings.name;
-  late final Widget Function(BuildContext, RouteSettings)? builder;
+  late final Widget Function(BuildContext, RouteSettings) builder;
 
   if (routeName == null) {
     return null;
@@ -43,15 +43,13 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   } else if (routeName.startsWith(animeRouteName)) {
     builder = _animeDetailsRouteBuilder;
   } else {
-    builder = null;
+    return null;
   }
 
-  return builder == null
-      ? null
-      : MaterialPageRoute<dynamic>(
-          settings: settings,
-          builder: (context) => builder!(context, settings),
-        );
+  return MaterialPageRoute<dynamic>(
+    settings: settings,
+    builder: (context) => builder(context, settings),
+  );
 }
 
 Route<dynamic> onUnknownRoute(RouteSettings settings) {
