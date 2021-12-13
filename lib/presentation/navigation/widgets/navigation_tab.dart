@@ -14,6 +14,7 @@ class NavigationTab extends StatelessWidget {
     return Navigator(
       initialRoute: routeName,
       onGenerateRoute: navigation.onGenerateRoute,
+      onUnknownRoute: navigation.onUnknownRoute,
       reportsRouteUpdateToEngine: false,
       observers: [
         HeroController(),
