@@ -27,16 +27,22 @@ class App extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: theme.light,
       darkTheme: theme.dark,
-      builder: (context, __) {
+      onGenerateRoute: _onGenerateRoute,
+    );
+  }
+
+  String _onGenerateTitle(BuildContext context) {
+    return AppLocalizations.of(context)!.appTitle;
+  }
+
+  Route<dynamic> _onGenerateRoute(RouteSettings settings) {
+    return MaterialPageRoute(
+      builder: (context) {
         return ChangeNotifierProvider(
           create: (context) => NavigationViewModel(),
           child: const NavigationView(),
         );
       },
     );
-  }
-
-  String _onGenerateTitle(BuildContext context) {
-    return AppLocalizations.of(context)!.appTitle;
   }
 }

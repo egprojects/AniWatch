@@ -8,8 +8,7 @@ class BookmarksTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const NavigationTab(
-      key: ValueKey(2),
-      routeName: navigation.bookmarksRouteName,
+      initialRoute: navigation.bookmarksRouteName,
     );
   }
 }

@@ -8,8 +8,7 @@ class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const NavigationTab(
-      key: ValueKey(1),
-      routeName: navigation.searchRouteName,
+      initialRoute: navigation.searchRouteName,
     );
   }
 }

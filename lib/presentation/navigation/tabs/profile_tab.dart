@@ -8,8 +8,7 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const NavigationTab(
-      key: ValueKey(4),
-      routeName: navigation.profileRouteName,
+      initialRoute: navigation.profileRouteName,
     );
   }
 }

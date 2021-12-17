@@ -8,8 +8,7 @@ class DownloadsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const NavigationTab(
-      key: ValueKey(3),
-      routeName: navigation.downloadsRouteName,
+      initialRoute: navigation.downloadsRouteName,
     );
   }
 }
