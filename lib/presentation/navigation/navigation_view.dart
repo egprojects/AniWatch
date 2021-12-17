@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
+
 import '/domain/extensions/context_dependents.dart';
-import '/presentation/home/home_view.dart';
-import '/presentation/home/home_view_model.dart';
 import '/presentation/widgets/widgets.dart';
 import 'navigation_view_model.dart';
 import 'selectors/navigation_selectors.dart';
+import 'tabs/tabs.dart';
 
 class NavigationView extends StatelessWidget {
   const NavigationView({
@@ -24,12 +25,24 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HomeViewModel>(
-      create: (context) => HomeViewModel(
-        animeRepository: context.read(),
-      ),
-      child: const HomeView(),
+    return NavigationCurrentTabIndexSelector(
+      builder: (context, currentTabIndex, ___) {
+        return IndexedStack(
+          index: currentTabIndex,
+          children: _buildTabs(context),
+        );
+      },
     );
+  }
+
+  List<Widget> _buildTabs(BuildContext context) {
+    return const [
+      HomeTab(),
+      SearchTab(),
+      BookmarksTab(),
+      DownloadsTab(),
+      ProfileTab(),
+    ];
   }
 }
 
@@ -40,13 +53,9 @@ class _BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return NavigationCurrentTabIndexSelector(
       builder: (context, currentTabIndex, ___) {
-        // TODO: replace with Material You `BottomNavigation`
-        return BottomNavigationBar(
+        return CupertinoTabBar(
           onTap: context.read<NavigationViewModel>().onTabTap,
           currentIndex: currentTabIndex,
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
           items: _buildItems(context),
         );
       },

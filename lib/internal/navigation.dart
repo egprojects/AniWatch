@@ -10,48 +10,99 @@ import 'package:provider/provider.dart';
 
 import '/presentation/anime_details/anime_details_view.dart';
 import '/presentation/anime_details/anime_details_view_model.dart';
-import '/presentation/navigation/navigation_view.dart';
-import '/presentation/navigation/navigation_view_model.dart';
+import '/presentation/bookmarks/bookmarks_view.dart';
+import '/presentation/downloads/downloads_view.dart';
+import '/presentation/home/home_view.dart';
+import '/presentation/home/home_view_model.dart';
+import '/presentation/profile/profile_view.dart';
+import '/presentation/search/search_view.dart';
+import '/presentation/unknown_page/unknown_page_view.dart';
 
-const String _homeRouteName = r'/';
-const String _animeRouteName = r'/anime';
+typedef _RouteBuilder = Widget Function(
+  BuildContext context,
+  RouteSettings settings,
+);
+
+const String bookmarksRouteName = r'/bookmarks';
+const String downloadsRouteName = r'/downloads';
+const String homeRouteName = r'/';
+const String profileRouteName = r'/profile';
+const String searchRouteName = r'/search';
+const String animeRouteName = r'/anime';
 
 Future<dynamic> openHome(BuildContext context) {
-  return Navigator.pushNamed(context, _homeRouteName);
+  return Navigator.pushNamed(context, homeRouteName);
 }
 
 Future<dynamic> openAnimeDetails(
   BuildContext context, {
   required int id,
 }) {
-  return Navigator.pushNamed(context, '$_animeRouteName/$id');
+  return Navigator.pushNamed(context, '$animeRouteName/$id');
 }
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-  final String? routeName = settings.name;
-  late final Widget Function(BuildContext, RouteSettings) builder;
+  final _RouteBuilder? builder = _findRouteBuilder(settings.name);
 
-  if (routeName == null) {
-    return null;
-  } else if (routeName == _homeRouteName) {
-    builder = _homeRouteBuilder;
-  } else if (routeName.startsWith(_animeRouteName)) {
-    builder = _animeDetailsRouteBuilder;
-  }
+  return builder == null
+      ? null
+      : MaterialPageRoute<dynamic>(
+          settings: settings,
+          builder: (context) => builder(context, settings),
+        );
+}
 
-  return MaterialPageRoute<Widget>(
-    settings: settings,
-    builder: (BuildContext context) => builder(context, settings),
+Route<dynamic> onUnknownRoute(RouteSettings settings) {
+  return MaterialPageRoute<UnknownPageView>(
+    builder: (context) {
+      return const UnknownPageView();
+    },
   );
 }
 
+_RouteBuilder? _findRouteBuilder(String? routeName) {
+  if (routeName == null) {
+    return null;
+  } else if (routeName == bookmarksRouteName) {
+    return _bookmarksRouteBuilder;
+  } else if (routeName == downloadsRouteName) {
+    return _downloadsRouteBuilder;
+  } else if (routeName == homeRouteName) {
+    return _homeRouteBuilder;
+  } else if (routeName == profileRouteName) {
+    return _profileRouteBuilder;
+  } else if (routeName == searchRouteName) {
+    return _searchRouteBuilder;
+  } else if (routeName.startsWith(animeRouteName)) {
+    return _animeDetailsRouteBuilder;
+  } else {
+    return null;
+  }
+}
+
+Widget _bookmarksRouteBuilder(BuildContext context, RouteSettings settings) {
+  return const BookmarksView();
+}
+
+Widget _downloadsRouteBuilder(BuildContext context, RouteSettings settings) {
+  return const DownloadsView();
+}
+
 Widget _homeRouteBuilder(BuildContext context, RouteSettings settings) {
-  return ChangeNotifierProvider<NavigationViewModel>(
-    create: (context) => NavigationViewModel(
-      initialTabIndex: NavigationViewModel.homeTabIndex,
+  return ChangeNotifierProvider<HomeViewModel>(
+    create: (context) => HomeViewModel(
+      animeRepository: context.read(),
     ),
-    child: const NavigationView(),
+    child: const HomeView(),
   );
+}
+
+Widget _profileRouteBuilder(BuildContext context, RouteSettings settings) {
+  return const ProfileView();
+}
+
+Widget _searchRouteBuilder(BuildContext context, RouteSettings settings) {
+  return const SearchView();
 }
 
 Widget _animeDetailsRouteBuilder(BuildContext context, RouteSettings settings) {
@@ -59,7 +110,7 @@ Widget _animeDetailsRouteBuilder(BuildContext context, RouteSettings settings) {
     create: (BuildContext context) {
       final String routeName = settings.name!;
       final String idSourceString =
-          routeName.substring(_animeRouteName.length + 1);
+          routeName.substring(animeRouteName.length + 1);
       final int id = int.parse(idSourceString);
 
       return AnimeDetailsViewModel(
