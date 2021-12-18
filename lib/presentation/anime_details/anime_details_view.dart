@@ -1,5 +1,6 @@
 import '/domain/extensions/context_dependents.dart';
 import '/presentation/widgets/widgets.dart';
+import 'anime_details_view_model.dart';
 import 'selectors/anime_details_selectors.dart';
 
 class AnimeDetailsView extends StatelessWidget {
@@ -107,7 +108,7 @@ class AnimeDetailsView extends StatelessWidget {
               children: [
                 _buildTopBarTextInfo(context),
                 spacerW16,
-                _buildWatchButton(context),
+                _buildPlayButton(context),
               ],
             ),
           ),
@@ -221,9 +222,10 @@ class AnimeDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _buildWatchButton(BuildContext context) {
+  Widget _buildPlayButton(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () =>
+          context.read<AnimeDetailsViewModel>().onPlayPressed(context),
       child: const Icon(Icons.play_arrow),
     );
   }

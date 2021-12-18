@@ -14,6 +14,8 @@ import '/presentation/bookmarks/bookmarks_view.dart';
 import '/presentation/downloads/downloads_view.dart';
 import '/presentation/home/home_view.dart';
 import '/presentation/home/home_view_model.dart';
+import '/presentation/player/player_view.dart';
+import '/presentation/player/player_view_model.dart';
 import '/presentation/profile/profile_view.dart';
 import '/presentation/search/search_view.dart';
 import '/presentation/unknown_page/unknown_page_view.dart';
@@ -29,6 +31,7 @@ const String homeRouteName = r'/';
 const String profileRouteName = r'/profile';
 const String searchRouteName = r'/search';
 const String animeRouteName = r'/anime';
+const String playerRouteName = r'/player';
 
 Future<dynamic> openHome(BuildContext context) {
   return Navigator.pushNamed(context, homeRouteName);
@@ -39,6 +42,10 @@ Future<dynamic> openAnimeDetails(
   required int id,
 }) {
   return Navigator.pushNamed(context, '$animeRouteName/$id');
+}
+
+Future<dynamic> openPlayer(BuildContext context) {
+  return Navigator.pushNamed(context, playerRouteName);
 }
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -75,6 +82,8 @@ _RouteBuilder? _findRouteBuilder(String? routeName) {
     return _searchRouteBuilder;
   } else if (routeName.startsWith(animeRouteName)) {
     return _animeDetailsRouteBuilder;
+  } else if (routeName == playerRouteName) {
+    return _playerRouteBuilder;
   } else {
     return null;
   }
@@ -119,5 +128,12 @@ Widget _animeDetailsRouteBuilder(BuildContext context, RouteSettings settings) {
       );
     },
     child: const AnimeDetailsView(),
+  );
+}
+
+Widget _playerRouteBuilder(BuildContext context, RouteSettings settings) {
+  return ChangeNotifierProvider<PlayerViewModel>(
+    create: (context) => PlayerViewModel(),
+    child: const PlayerView(),
   );
 }
