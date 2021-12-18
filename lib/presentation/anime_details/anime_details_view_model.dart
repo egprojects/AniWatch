@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart' show ChangeNotifier;
+import 'package:flutter/widgets.dart' show BuildContext, ChangeNotifier;
 
 import '/domain/models/anime/anime_details.dart';
 import '/domain/repositories/anime_repository.dart';
+import '/internal/navigation.dart' as navigation;
 
 class AnimeDetailsViewModel extends ChangeNotifier {
   AnimeDetailsViewModel({
@@ -30,5 +31,9 @@ class AnimeDetailsViewModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void onPlayPressed(BuildContext context) {
+    navigation.openPlayer(context);
   }
 }
