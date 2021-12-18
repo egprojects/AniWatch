@@ -224,8 +224,7 @@ class AnimeDetailsView extends StatelessWidget {
 
   Widget _buildPlayButton(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () =>
-          context.read<AnimeDetailsViewModel>().onPlayPressed(context),
+      onPressed: context.read<AnimeDetailsViewModel>().onPlayPressed,
       child: const Icon(Icons.play_arrow),
     );
   }

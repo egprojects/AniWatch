@@ -1,18 +1,21 @@
-import 'package:flutter/widgets.dart' show BuildContext, ChangeNotifier;
+import 'package:flutter/widgets.dart' show ChangeNotifier;
 
 import '/domain/models/anime/anime_details.dart';
 import '/domain/repositories/anime_repository.dart';
-import '/internal/navigation.dart' as navigation;
+import '/domain/services/navigation/root_navigation_service.dart';
 
 class AnimeDetailsViewModel extends ChangeNotifier {
   AnimeDetailsViewModel({
     required int id,
     required AnimeRepository animeRepository,
-  }) : _animeRepository = animeRepository {
+    required RootNavigationService rootNavigationService,
+  })  : _animeRepository = animeRepository,
+        _rootNavigationService = rootNavigationService {
     _getAnimeDetails(id);
   }
 
   final AnimeRepository _animeRepository;
+  final RootNavigationService _rootNavigationService;
   bool _isLoading = false;
   bool _hasErrorGettingAnimeDetails = false;
 
@@ -33,7 +36,7 @@ class AnimeDetailsViewModel extends ChangeNotifier {
     }
   }
 
-  void onPlayPressed(BuildContext context) {
-    navigation.openPlayer(context);
+  void onPlayPressed() {
+    _rootNavigationService.openPlayer();
   }
 }

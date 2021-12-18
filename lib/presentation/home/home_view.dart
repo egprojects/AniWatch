@@ -1,6 +1,5 @@
 import '/domain/extensions/context_dependents.dart';
 import '/domain/models/anime/anime_preview.dart';
-import '/internal/navigation.dart' as navigation;
 import '/presentation/widgets/widgets.dart';
 import 'home_view_model.dart';
 
@@ -59,9 +58,8 @@ class HomeView extends StatelessWidget {
               )
             : AnimeSmallTile(
                 anime: context.read<HomeViewModel>().latestReleases[index],
-                onTap: () {
-                  navigation.openAnimeDetails(context, id: anime!.id);
-                },
+                onTap: () =>
+                    context.read<HomeViewModel>().onAnimeTap(anime!.id),
               );
       },
     );
