@@ -5,8 +5,10 @@ import '/presentation/navigation/navigation_view.dart';
 import '/presentation/navigation/navigation_view_model.dart';
 import '/presentation/player/player_view.dart';
 import '/presentation/player/player_view_model.dart';
-import 'root_app_navigation_service.dart';
 import '../route_builder.dart';
+import 'root_app_navigation_service.dart';
+
+export 'root_app_navigation_service.dart';
 
 class RootAppNavigationServiceImpl extends RootAppNavigationService {
   RootAppNavigationServiceImpl({

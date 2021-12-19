@@ -8,6 +8,8 @@ import '/presentation/home/home_view_model.dart';
 import '../route_builder.dart';
 import 'tab_app_navigation_service.dart';
 
+export 'tab_app_navigation_service.dart';
+
 class TabAppNavigationServiceImpl extends TabAppNavigationService {
   TabAppNavigationServiceImpl({
     required NavigatorKey navigatorKey,

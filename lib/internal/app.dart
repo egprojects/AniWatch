@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'dependencies/app_dependencies.dart';
-import 'navigation/app_navigation_service.dart';
 import 'navigation/root/root_app_navigation_service.dart';
 
 class App extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show ChangeNotifier;
 
 class NavigationViewModel extends ChangeNotifier {
   NavigationViewModel({

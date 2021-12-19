@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart'
+    show GlobalKey, NavigatorState, Route, RouteSettings;
 
 import '/internal/navigation/tab/tab_app_navigation_service.dart';
 

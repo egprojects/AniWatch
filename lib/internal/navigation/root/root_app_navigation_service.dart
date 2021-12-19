@@ -1,6 +1,7 @@
 import '../app_navigation_service_base.dart';
 import '../route_builder.dart';
 
+export '../app_navigation_service.dart';
 export '../navigator_key.dart';
 
 abstract class RootAppNavigationService extends AppNavigationServiceBase {

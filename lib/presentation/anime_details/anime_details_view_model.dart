@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart' show ChangeNotifier;
 
-import '/domain/models/anime/anime_details.dart';
 import '/domain/services/anime/anime_service.dart';
 import '/internal/navigation/root/root_app_navigation_service.dart';
 

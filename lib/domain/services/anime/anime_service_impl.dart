@@ -1,5 +1,3 @@
-import '/domain/models/anime/anime_details.dart';
-import '/domain/models/anime/anime_preview.dart';
 import '/domain/repositories/anime/anime_repository.dart';
 import 'anime_service.dart';
 

@@ -2,9 +2,13 @@ import '/data/models/anime_details_data.dart';
 import '/domain/models/anime/anime_details.dart';
 
 class AnimeDetailsFactory {
-  const AnimeDetailsFactory._();
+  const AnimeDetailsFactory({
+    required String baseUrl,
+  }) : _baseUrl = baseUrl;
 
-  static AnimeDetails fromData(AnimeDetailsData data) {
+  final String _baseUrl;
+
+  AnimeDetails fromData(AnimeDetailsData data) {
     return AnimeDetails(
       id: data.id,
       titleRu: data.titleRu,

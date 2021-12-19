@@ -2,8 +2,10 @@ import '../remote_source_base.dart';
 import 'anime_source.dart';
 import 'factories/factories.dart';
 
-class AnimeRemoteSource extends RemoteSourceBase implements AnimeSource {
-  AnimeRemoteSource() : super('shikimori.one');
+export 'anime_source.dart';
+
+class ShikimoriAnimeSource extends RemoteSourceBase implements AnimeSource {
+  ShikimoriAnimeSource() : super('shikimori.one');
 
   @override
   Future<AnimeDetailsData> getAnimeDetails(int id) {

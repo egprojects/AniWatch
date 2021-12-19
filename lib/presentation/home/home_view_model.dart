@@ -1,8 +1,7 @@
 import 'dart:collection';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show ChangeNotifier;
 
-import '/domain/models/anime/anime_preview.dart';
 import '/domain/services/anime/anime_service.dart';
 import '/internal/navigation/tab/tab_app_navigation_service.dart';
 

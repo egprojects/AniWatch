@@ -1,3 +1,0 @@
-class UserAnimeRate {
-  const UserAnimeRate();
-}

@@ -1,10 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '/data/repositories/anime/anime_repository_impl.dart';
-import '/domain/services/anime/anime_service.dart';
+import '/data/repositories/anime/shikimori_anime_repository.dart';
 import '/domain/services/anime/anime_service_impl.dart';
-import '../navigation/root/root_app_navigation_service.dart';
 import '../navigation/root/root_app_navigation_service_impl.dart';
 import 'dependency_creator.dart';
 
@@ -52,7 +50,7 @@ class _DefaultAppDependencyCreators {
 
   static AnimeService _animeServiceCreator(BuildContext context) {
     return AnimeServiceImpl(
-      repository: AnimeRepositoryImpl(),
+      repository: ShikimoriAnimeRepository(),
     );
   }
 }
