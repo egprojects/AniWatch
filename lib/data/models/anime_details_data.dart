@@ -1,20 +1,20 @@
-import 'anime_genre.dart';
-import 'anime_preview.dart';
-import 'anime_studio.dart';
-import 'anime_user_watch_data.dart';
-import 'anime_video.dart';
+import 'anime_genre_data.dart';
+import 'anime_preview_data.dart';
+import 'anime_studio_data.dart';
+import 'anime_user_watch_data_data.dart';
+import 'anime_video_data.dart';
 
-export 'anime_genre.dart';
-export 'anime_studio.dart';
-export 'anime_user_watch_data.dart';
-export 'anime_video.dart';
+export 'anime_genre_data.dart';
+export 'anime_studio_data.dart';
+export 'anime_user_watch_data_data.dart';
+export 'anime_video_data.dart';
 
-class AnimeDetails extends AnimePreview {
-  const AnimeDetails({
+class AnimeDetailsData extends AnimePreviewData {
+  const AnimeDetailsData({
     required int id,
     required String titleRu,
     required String titleEn,
-    required String posterUrl,
+    required String posterPath,
     required double score,
     required this.titleJp,
     required this.titleAlternatives,
@@ -42,7 +42,7 @@ class AnimeDetails extends AnimePreview {
           id: id,
           titleRu: titleRu,
           titleEn: titleEn,
-          posterUrl: posterUrl,
+          posterPath: posterPath,
           score: score,
         );
 
@@ -59,13 +59,13 @@ class AnimeDetails extends AnimePreview {
   final bool ongoing;
   final Map<int, int> scoresStats;
   final Map<String, int> watchStatusesStats;
-  final List<AnimeGenre> genres;
-  final List<AnimeStudio> studios;
-  final List<AnimeVideo> videos;
+  final List<AnimeGenreData> genres;
+  final List<AnimeStudioData> studios;
+  final List<AnimeVideoData> videos;
   final List<String> screenshotsPaths;
   final String? description;
-  final DateTime? releaseStartDate;
-  final DateTime? releaseEndDate;
-  final DateTime? nextEpisodeDate;
-  final AnimeUserWatchData? userWatchData;
+  final String? releaseStartDate;
+  final String? releaseEndDate;
+  final String? nextEpisodeDate;
+  final AnimeUserWatchDataData? userWatchData;
 }

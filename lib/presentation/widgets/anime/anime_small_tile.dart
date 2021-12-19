@@ -70,7 +70,7 @@ class _Content extends StatelessWidget {
             ]
           : [
               _Poster(url: anime!.posterUrl),
-              _TitleBox(title: anime!.title),
+              _TitleBox(title: anime!.titleRu),
             ],
     );
   }

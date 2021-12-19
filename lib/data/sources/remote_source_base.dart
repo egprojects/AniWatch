@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
+import '/data/models/json.dart';
+
 typedef HttpHeaders = Map<String, String>;
 typedef HttpQueryParameters = Map<String, String>;
-typedef Json = Map<String, dynamic>;
 
 enum HttpRequestMethod {
   get,
@@ -18,7 +19,7 @@ enum HttpRequestMethod {
   patch
 }
 
-extension IsThatHttpRequestMethod on HttpRequestMethod {
+extension _IsThatHttpRequestMethod on HttpRequestMethod {
   bool get isGet => this == HttpRequestMethod.get;
   bool get isHead => this == HttpRequestMethod.head;
   bool get isPost => this == HttpRequestMethod.post;
@@ -30,8 +31,8 @@ extension IsThatHttpRequestMethod on HttpRequestMethod {
   bool get isPatch => this == HttpRequestMethod.patch;
 }
 
-abstract class RestfulApiServiceBase {
-  RestfulApiServiceBase(this._authority);
+abstract class RemoteSourceBase {
+  RemoteSourceBase(this._authority);
 
   final String _authority;
   late final Client _client = Client();
@@ -133,7 +134,7 @@ abstract class RestfulApiServiceBase {
     });
   }
 
-  void close() {
+  void dispose() {
     _client.close();
   }
 }

@@ -1,9 +1,8 @@
+import '/internal/navigation/tab/tab_app_navigation_service.dart';
+import '/internal/navigation/tab/tab_app_navigation_service_impl.dart';
 import '/presentation/widgets/widgets.dart';
 import 'tab/navigation_tab_view.dart';
 import 'tab/navigation_tab_view_model.dart';
-
-import '/domain/services/navigation/tab_navigation_service.dart';
-import '/internal/navigation/app_tab_navigation_service.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -12,10 +11,10 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<TabNavigationService>(
+        Provider<TabAppNavigationService>(
           create: _createTabNavigationService,
         ),
-        ProxyProvider<TabNavigationService, NavigationTabViewModel>(
+        ProxyProvider<TabAppNavigationService, NavigationTabViewModel>(
           update: _updateNavigationTabViewModel,
         ),
       ],
@@ -23,15 +22,15 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  TabNavigationService _createTabNavigationService(BuildContext context) {
-    return AppTabNavigationService(
+  TabAppNavigationService _createTabNavigationService(BuildContext context) {
+    return TabAppNavigationServiceImpl(
       navigatorKey: GlobalKey(),
     );
   }
 
   NavigationTabViewModel _updateNavigationTabViewModel(
     BuildContext context,
-    TabNavigationService tabNavigationService,
+    TabAppNavigationService tabNavigationService,
     ___,
   ) {
     return NavigationTabViewModel(

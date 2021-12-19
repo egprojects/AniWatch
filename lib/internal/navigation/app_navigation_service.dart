@@ -1,55 +1,26 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart' show NavigatorState, Route, RouteSettings;
 
-import '/domain/services/navigation/navigation_service.dart';
-import '/presentation/unknown_page/unknown_page_view.dart';
+import 'navigator_key.dart';
 
-abstract class AppNavigationService extends NavigationService {
-  const AppNavigationService({
-    required NavigatorKey navigatorKey,
-  }) : super(navigatorKey: navigatorKey);
+export 'navigator_key.dart';
 
-  @override
+abstract class AppNavigationService {
+  const AppNavigationService();
+
+  NavigatorKey get navigatorKey;
+
   List<Route<T>> onGenerateInitialRoutes<T>(
     NavigatorState navigator,
     String routeName,
-  ) {
-    final RouteSettings routeSettings = RouteSettings(name: routeName);
-    final Route<T>? route = onGenerateRoute(routeSettings);
+  );
 
-    if (route == null) {
-      throw ArgumentError.value(
-        routeName,
-        'routeName',
-        'Unknown route name',
-      );
-    }
+  Route<T>? onGenerateRoute<T>(RouteSettings settings);
 
-    return [route];
-  }
+  Route<T> onUnknownRoute<T>(RouteSettings settings);
 
-  @override
-  Route<T> onUnknownRoute<T>(RouteSettings settings) {
-    return createRoute(
-      settings: settings,
-      builder: _unknownPageRouteBuilder,
-    );
-  }
-
-  @override
-  Route<T> createRoute<T>({
-    required RouteSettings settings,
-    required RouteBuilder<Widget> builder,
-  }) {
-    return MaterialPageRoute(
-      settings: settings,
-      builder: (context) => builder(context, settings),
-    );
-  }
-
-  Widget _unknownPageRouteBuilder(
-    BuildContext context,
-    RouteSettings settings,
-  ) {
-    return const UnknownPageView();
-  }
+  Future<T?> push<T extends Object?>({
+    required String routeName,
+    required RegExp verificator,
+    Object? arguments,
+  });
 }

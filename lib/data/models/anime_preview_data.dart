@@ -1,15 +1,15 @@
-class AnimePreview {
-  const AnimePreview({
+class AnimePreviewData {
+  const AnimePreviewData({
     required this.id,
     required this.titleRu,
     required this.titleEn,
-    required this.posterUrl,
+    required this.posterPath,
     required this.score,
   });
 
   final int id;
   final String titleRu;
   final String titleEn;
-  final String posterUrl;
+  final String posterPath;
   final double score;
 }

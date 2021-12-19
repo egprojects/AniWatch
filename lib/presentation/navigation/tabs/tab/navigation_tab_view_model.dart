@@ -1,15 +1,15 @@
 import 'package:flutter/widgets.dart';
 
-import '/domain/services/navigation/tab_navigation_service.dart';
+import '/internal/navigation/tab/tab_app_navigation_service.dart';
 
 class NavigationTabViewModel {
   const NavigationTabViewModel({
     required this.initialRoute,
-    required TabNavigationService tabNavigationService,
+    required TabAppNavigationService tabNavigationService,
   }) : _tabNavigationService = tabNavigationService;
 
   final String initialRoute;
-  final TabNavigationService _tabNavigationService;
+  final TabAppNavigationService _tabNavigationService;
 
   GlobalKey<NavigatorState> get navigatorKey =>
       _tabNavigationService.navigatorKey;

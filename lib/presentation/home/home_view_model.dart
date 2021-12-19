@@ -3,20 +3,20 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 import '/domain/models/anime/anime_preview.dart';
-import '/domain/repositories/anime_repository.dart';
-import '/domain/services/navigation/tab_navigation_service.dart';
+import '/domain/services/anime/anime_service.dart';
+import '/internal/navigation/tab/tab_app_navigation_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
   HomeViewModel({
-    required AnimeRepository animeRepository,
-    required TabNavigationService tabNavigationService,
-  })  : _animeRepository = animeRepository,
+    required AnimeService animeService,
+    required TabAppNavigationService tabNavigationService,
+  })  : _animeService = animeService,
         _tabNavigationService = tabNavigationService {
     _getLatestReleases();
   }
 
-  final AnimeRepository _animeRepository;
-  final TabNavigationService _tabNavigationService;
+  final AnimeService _animeService;
+  final TabAppNavigationService _tabNavigationService;
   late final List<AnimePreview> _latestReleases;
   bool _isGettingLatestReleases = false;
   bool _hasErrorGettingLatestReleases = false;
@@ -30,7 +30,7 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> _getLatestReleases() async {
     try {
       _isGettingLatestReleases = true;
-      _latestReleases = await _animeRepository.getLatestReleases(
+      _latestReleases = await _animeService.getLatestReleases(
         latestReleasesCount,
       );
     } on Error {
